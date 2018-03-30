@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_icon"
-    tools:context="com.example.berylsystems.apiusingservices.activity.SplashActivity">
+    tools:context="com.example.punamchandpatidar.contactmanager.activity.SplashActivity">
 
 </RelativeLayout>
