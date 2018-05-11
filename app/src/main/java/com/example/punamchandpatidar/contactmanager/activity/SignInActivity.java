@@ -36,6 +36,8 @@ public class SignInActivity extends EventBussHandler {
     EditText password;
     @Bind(R.id.submit)
     Button submit;
+    @Bind(R.id.get_map)
+    Button get_map;
     ProgressDialog mProgressDialog;
     AppUser appUser;
 
@@ -66,6 +68,14 @@ public class SignInActivity extends EventBussHandler {
                 } else {
                     Snackbar.make(coordinatorLayout, "Please check you internet connection first", Snackbar.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        get_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                startActivity(intent);
             }
         });
     }
