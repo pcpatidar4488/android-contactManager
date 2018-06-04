@@ -68,79 +68,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFrag.getMapAsync(this);
 
 
-        mGoogleApiClient = new GoogleApiClient
+       /* mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .build();
+                .build();*/
+
+        //Place Atuto complete search text view
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
-                .build();
-        autocompleteFragment.setFilter(typeFilter);
-
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                //Log.i(TAG, "Place: " + place.getName());//get place details here
-                final LatLng latLng = place.getLatLng();
-                if (mCurrLocationMarker!=null){
-                    mCurrLocationMarker.remove();
-                }
+                //Log.i(TAG, "Place: " + place.getName());
+                mGoogleMap.clear();
+                Toast.makeText(getApplicationContext(),place.getName(),Toast.LENGTH_LONG).show();
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                markerOptions.title("Search Position");
+                markerOptions.position(place.getLatLng());
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
                 mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
                 //move map camera
-                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 11));
             }
 
             @Override
             public void onError(Status status) {
                 // TODO: Handle the error.
-                //Log.i(TAG, "An error occurred: " + status);
+                //g.i(TAG, "An error occurred: " + status);
+                Toast.makeText(getApplicationContext(),""+status,Toast.LENGTH_LONG).show();
+
             }
         });
 
-        callPlaceAutocompleteActivityIntent();
 
     }
 
-    private void callPlaceAutocompleteActivityIntent() {
-        try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            // TODO: Handle the error.
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //autocompleteFragment.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(this, data);
-                System.out.println("Place: " + place.getName());
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(this, data);
-                System.out.println("An " + status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-
-            }
-        }
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -181,7 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
-       /* if (mCurrLocationMarker != null) {
+      /*  if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }*/
         if (!b) {
@@ -195,8 +162,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             //move map camera
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
-            b = true;
-        }
+           b = true;
+       }
     }
 
     @Override

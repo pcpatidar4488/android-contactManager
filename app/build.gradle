@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.berylsystems.apiusingservices"
+        applicationId 'com.example.punamchandpatidar.contactmanager'
         minSdkVersion 18
         targetSdkVersion 26
         versionCode 1
@@ -16,18 +16,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
     implementation 'com.google.android.gms:play-services-maps:11.0.4'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     annotationProcessor 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.greenrobot:eventbus:3.1.1'
-    compile "com.squareup.retrofit2:retrofit:2.3.0"
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.google.android.gms:play-services-location:11.0.4'
     compile 'com.google.android.gms:play-services-places:11.0.4'
